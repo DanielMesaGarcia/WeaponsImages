@@ -27,10 +27,10 @@ db.sequelize.sync({ force: true }).then(() => {
 });
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bicycle application."});
+  res.json({ message: "Welcome to weapon application."});
 });
 
-require("./routes/bicycle.routes")(app);
+require("./routes/weapon.routes")(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

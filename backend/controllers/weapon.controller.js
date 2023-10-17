@@ -1,36 +1,37 @@
 const db = require("../models");
-const Bicycle = db.bicycles;
+const Weapon = db.bicycles;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Bicycle
+// Create and Save a new Weapon
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.brand || !req.body.model){
+  if (!req.body.type || !req.body.element || !req.body.monster){
     res.status(400).send({
       message: "Content cannot be empty!"
     });
   }
 
-  // Create a Bicycle
-  const bicycle = {
-    brand: req.body.brand,
-    model: req.body.model,
+  // Create a Weapon
+  const weapon = {
+    type: req.body.type,
+    element: req.body.element,
+    monster: req.body.monster,
     filename: req.file ? req.file.filename : ""
   }
 
-  // Save Bicycle in the database
-  Bicycle.create(bicycle).then(data => {
+  // Save Weapon in the database
+  Weapon.create(weapon).then(data => {
     res.send(data);
   }).catch(err => {
     res.status(500).send({
-      message: err.message || "Some error occurred while creating the bicycle"
+      message: err.message || "Some error occurred while creating the weapon"
     })
   });
 };
 
 // Retrieve all Bicycles from the database.
 exports.findAll = (req, res) => {
-  Bicycle.findAll().then(data => {
+  Weapon.findAll().then(data => {
     res.send(data);
   }).catch(err => {
     res.status(500).send({
@@ -39,17 +40,17 @@ exports.findAll = (req, res) => {
   })
 };
 
-// Find a single Bicycle with an id
+// Find a single Weapon with an id
 exports.findOne = (req, res) => {
 
 }
 
-// Update a Bicycle by the id in the request
+// Update a Weapon by the id in the request
 exports.update = (req, res) => {
 
 };
 
-// Delete a Bicycle with the specified id in the request
+// Delete a Weapon with the specified id in the request
 exports.delete = (req, res) => {
 
 };

@@ -20,6 +20,6 @@ const sequelize = new Sequelize(dbConfig.DB,
   db.Sequelize = Sequelize;
   db.sequelize = sequelize;
 
-  db.bicycles = require("./bicycle.model.js")(sequelize, Sequelize);
+  db.bicycles = require("./weapon.model.js")(sequelize, Sequelize);
 
   module.exports = db;
