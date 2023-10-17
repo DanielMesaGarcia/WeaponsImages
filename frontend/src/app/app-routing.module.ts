@@ -8,10 +8,6 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'add-weapon',
-    loadChildren: () => import('./add-weapon/add-weapon.module').then( m => m.AddWeaponPageModule)
-  },
-  {
     path: 'list-weapons',
     loadChildren: () => import('./list-weapons/list-weapons.module').then( m => m.ListWeaponsPageModule)
   },
