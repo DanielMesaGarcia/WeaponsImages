@@ -8,7 +8,7 @@ module.exports = app => {
   router.post("/", upload.single('file'), weapons.create);
   router.post("/", weapons.create);
 
-  // Retrieve all Bicycles
+  // Retrieve all Weapons
   router.get("/", weapons.findAll);
 
   // Retrieve a single Weapon with id

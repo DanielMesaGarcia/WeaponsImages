@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AddBicyclePage } from './add-weapon.page';
+import { AddWeaponPage } from './add-weapon.page';
 
-describe('AddBicyclePage', () => {
-  let component: AddBicyclePage;
-  let fixture: ComponentFixture<AddBicyclePage>;
+describe('AddWeaponPage', () => {
+  let component: AddWeaponPage;
+  let fixture: ComponentFixture<AddWeaponPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddBicyclePage ],
+      declarations: [ AddWeaponPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AddBicyclePage);
+    fixture = TestBed.createComponent(AddWeaponPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

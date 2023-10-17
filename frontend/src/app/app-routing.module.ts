@@ -8,7 +8,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'add-bicycle',
+    path: 'add-weapon',
     loadChildren: () => import('./add-weapon/add-weapon.module').then( m => m.AddWeaponPageModule)
   },
   {
