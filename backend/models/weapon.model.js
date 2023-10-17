@@ -1,9 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
-  const Bicycle = sequelize.define("bicycle", {
-    brand: {
+  const Weapon = sequelize.define("weapon", {
+    type: {
       type: Sequelize.STRING
     },
-    model: {
+    element: {
+      type: Sequelize.STRING
+    },
+    monster: {
       type: Sequelize.STRING
     },
     filename: {
@@ -11,5 +14,5 @@ module.exports = (sequelize, Sequelize) => {
     }
   });
 
-  return Bicycle;
+  return Weapon;
 }

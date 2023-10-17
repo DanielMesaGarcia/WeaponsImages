@@ -1,41 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BicycleService } from '../services/weapon.service';
+import { WeaponService } from '../services/weapon.service';
 import { PhotoService } from '../services/photo.service';
 
 @Component({
-  selector: 'app-add-bicycle',
-  templateUrl: './add-bicycle.page.html',
-  styleUrls: ['./add-bicycle.page.scss'],
+  selector: 'app-add-weapon',
+  templateUrl: './add-weapon.page.html',
+  styleUrls: ['./add-weapon.page.scss'],
 })
-export class AddBicyclePage implements OnInit {
+export class AddWeaponPage implements OnInit {
 
-  bicycleForm: FormGroup;
+  weaponForm: FormGroup;
   isSubmitted: boolean = false;
   capturedPhoto: string = "";
 
   constructor(public formBuilder: FormBuilder,
-    private bicycleService: BicycleService,
+    private weaponService: WeaponService,
     private photoService: PhotoService,
     private router: Router
   ) { }
 
   ionViewWillEnter() {
-    this.bicycleForm.reset();
+    this.weaponForm.reset();
     this.isSubmitted = false;
     this.capturedPhoto = "";
   }
 
   ngOnInit() {
-    this.bicycleForm = this.formBuilder.group({
+    this.weaponForm = this.formBuilder.group({
       brand: ['', [Validators.required]],
       model: ['', [Validators.required]]
     })
   }
 
   get errorControl() {
-    return this.bicycleForm.controls;
+    return this.weaponForm.controls;
   }
 
   takePhoto() {
@@ -60,7 +60,7 @@ export class AddBicyclePage implements OnInit {
   async submitForm() {
     // DECOMMENT:
     this.isSubmitted = true;
-    if (!this.bicycleForm.valid) {
+    if (!this.weaponForm.valid) {
       console.log('Please provide all the required values!')
       return false;
     } else {
@@ -70,9 +70,9 @@ export class AddBicyclePage implements OnInit {
         blob = await response.blob();
       }
 
-      this.bicycleService.createBicycle(this.bicycleForm.value, blob).subscribe(data => {
+      this.weaponService.createWeapon(this.weaponForm.value, blob).subscribe(data => {
         console.log("Photo sent!");
-        this.router.navigateByUrl("/list-bicycles");
+        this.router.navigateByUrl("/list-weapons");
       })
     }
   }

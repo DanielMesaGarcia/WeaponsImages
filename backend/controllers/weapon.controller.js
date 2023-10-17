@@ -1,5 +1,5 @@
 const db = require("../models");
-const Weapon = db.bicycles;
+const Weapon = db.weapons;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Weapon
@@ -29,7 +29,7 @@ exports.create = (req, res) => {
   });
 };
 
-// Retrieve all Bicycles from the database.
+// Retrieve all Weapons from the database.
 exports.findAll = (req, res) => {
   Weapon.findAll().then(data => {
     res.send(data);
