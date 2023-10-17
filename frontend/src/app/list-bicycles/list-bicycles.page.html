@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Bicycle List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let b of bicycles">
+      <ion-avatar slot="start">
+        <img *ngIf="b.filename" src="http://localhost:8080/images/{{b.filename}}" alt="image"/>
+      </ion-avatar>
+      <ion-label>
+        <h1>{{b.brand}}</h1>
+        <p>{{b.model}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addBicycle()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> 
+</ion-content>
