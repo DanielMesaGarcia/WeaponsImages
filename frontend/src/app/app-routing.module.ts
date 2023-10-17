@@ -4,16 +4,16 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'list-bicycles',
+    redirectTo: 'list-weapons',
     pathMatch: 'full'
   },
   {
     path: 'add-bicycle',
-    loadChildren: () => import('./add-bicycle/add-bicycle.module').then( m => m.AddBicyclePageModule)
+    loadChildren: () => import('./add-weapon/add-weapon.module').then( m => m.AddWeaponPageModule)
   },
   {
-    path: 'list-bicycles',
-    loadChildren: () => import('./list-bicycles/list-bicycles.module').then( m => m.ListBicyclesPageModule)
+    path: 'list-weapons',
+    loadChildren: () => import('./list-weapons/list-weapons.module').then( m => m.ListWeaponsPageModule)
   },
 ];
 

@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Add Bicycle</ion-title>
+    <ion-title>Add Weapon</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -33,17 +33,22 @@
     </ion-row>
   </ion-grid>
 
-  <form [formGroup]="bicycleForm" (ngSubmit)="submitForm()" novalidate>
+  <form [formGroup]="weaponForm" (ngSubmit)="submitForm()" novalidate>
     <ion-item lines="full">
-      <ion-label position="floating">Brand</ion-label>
-      <ion-input formControlName="brand" type="text" required></ion-input>
+      <ion-label position="floating">Type</ion-label>
+      <ion-input formControlName="type" type="text" required></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.brand.errors?.required">Brand is required.</span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.type.errors?.required">Type is required.</span>
     <ion-item lines="full">
-      <ion-label position="floating">Model</ion-label>
-      <ion-input formControlName="model" type="text" required></ion-input>
+      <ion-label position="floating">Element</ion-label>
+      <ion-input formControlName="element" type="text" required></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.model.errors?.required">Model is required.</span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.element.errors?.required">Element is required.</span>
+    <ion-item lines="full">
+      <ion-label position="floating">Monster</ion-label>
+      <ion-input formControlName="element" type="text" required></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.element.errors?.required">Monster is required.</span>
     <ion-row>
       <ion-col>
         <ion-button type="submit" color="primary" expand="block">Submit</ion-button>

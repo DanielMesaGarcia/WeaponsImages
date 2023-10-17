@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AddBicyclePageRoutingModule } from './add-bicycle-routing.module';
+import { AddWeaponPageRoutingModule } from './add-weapon-routing.module';
 
-import { AddBicyclePage } from './add-bicycle.page';
+import { AddWeaponPage } from './add-weapon.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { AddBicyclePage } from './add-bicycle.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    AddBicyclePageRoutingModule
+    AddWeaponPageRoutingModule
   ],
-  declarations: [AddBicyclePage]
+  declarations: [AddWeaponPage]
 })
-export class AddBicyclePageModule {}
+export class AddWeaponPageModule {}

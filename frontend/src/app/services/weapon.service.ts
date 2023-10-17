@@ -4,21 +4,22 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class BicycleService {
+export class WeaponService {
 
-  endPoint = "http://localhost:8080/api/bicycles";
+  endPoint = "http://localhost:8080/api/weapons";
 
   constructor(private httpClient: HttpClient) { }
 
-  getBicycles(){
+  getWeapons(){
     return this.httpClient.get(this.endPoint);
   }
 
   // DECOMMENT:
-  createBicycle(bicycle, blob){
+  createWeapon(weapon, blob){
     let formData = new FormData();
-    formData.append("brand", bicycle.brand);
-    formData.append("model", bicycle.model);
+    formData.append("type", weapon.brand);
+    formData.append("element", weapon.model);
+    formData.append("monster", weapon.model);
     formData.append("file", blob);
 
     return this.httpClient.post(this.endPoint, formData);

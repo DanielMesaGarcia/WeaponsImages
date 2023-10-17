@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BicycleService } from '../services/bicycle.service';
+import { BicycleService } from '../services/weapon.service';
 import { PhotoService } from '../services/photo.service';
 
 @Component({
