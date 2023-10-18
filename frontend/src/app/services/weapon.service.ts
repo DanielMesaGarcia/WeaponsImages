@@ -14,15 +14,36 @@ export class WeaponService {
     return this.httpClient.get(this.endPoint);
   }
 
-  // DECOMMENT:
+  getWeaponPhoto(id: any) {
+    return this.httpClient.get(`${this.endPoint}/${id}/photo`);
+  }
+  
+
   createWeapon(weapon, blob) {
     let formData = new FormData();
-    formData.append("type", weapon.type); // Debe ser weapon.type en lugar de weapon.brand
-    formData.append("element", weapon.element); // Debe ser weapon.element en lugar de weapon.model
-    formData.append("monster", weapon.monster); // Debe ser weapon.monster en lugar de weapon.model
+    formData.append("type", weapon.type);
+    formData.append("element", weapon.element);
+    formData.append("monster", weapon.monster);
     formData.append("file", blob);
   
     return this.httpClient.post(this.endPoint, formData);
   }
+
+  getWeaponById(id: any) {
+    return this.httpClient.get(`${this.endPoint}/${id}`);
+  }
+
+  deleteWeapon(id: any) {
+    return this.httpClient.delete(`${this.endPoint}/${id}`);
+  }
+
+  updateWeapon(id: any, weapon: any, blob: any) {
+    let formData = new FormData();
+    formData.append("type", weapon.type);
+    formData.append("element", weapon.element);
+    formData.append("monster", weapon.monster);
+    formData.append("file", blob);
   
+    return this.httpClient.put(`${this.endPoint}/${id}`, formData);
+  }
 }

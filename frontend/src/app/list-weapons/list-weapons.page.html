@@ -5,18 +5,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let b of weapons">
-      <ion-avatar slot="start">
-        <img *ngIf="b.filename" src="http://localhost:8080/images/{{b.filename}}" alt="image"/>
-      </ion-avatar>
-      <ion-label>
-        <h1>{{b.type}}</h1>
-        <p>{{b.element}}</p>
-        <p>{{b.monster}}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+    <ion-list>
+      <ion-item *ngFor="let b of weapons">
+        <ion-avatar slot="start">
+          <img *ngIf="b.filename" src="http://localhost:8080/images/{{b.filename}}" alt="image"/>
+        </ion-avatar>
+        <ion-label>
+          <h1>{{b.type}}</h1>
+          <p>{{b.element}}</p>
+          <p>{{b.monster}}</p>
+        </ion-label>
+        <ion-button color="danger" fill="outline" (click)="deleteWeapon(b.id)">Delete</ion-button>
+        <ion-button color="primary" fill="outline" (click)="updateWeapon(b.id)">Update</ion-button>
+      </ion-item>
+    </ion-list>
 
   <form (ngSubmit)="onSubmit()">
     <ion-item>

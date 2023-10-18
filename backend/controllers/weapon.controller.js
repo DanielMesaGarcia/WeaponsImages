@@ -10,7 +10,7 @@ exports.create = (req, res) => {
       message: "Content cannot be empty!"
     });
   }
-
+  
   // Create a Weapon
   const weapon = {
     type: req.body.type,

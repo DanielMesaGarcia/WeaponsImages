@@ -12,10 +12,70 @@ import { PhotoService } from '../services/photo.service';
 export class ListWeaponsPage implements OnInit {
   capturedPhoto: string = "";
   weapons: any = [];
-
+  isUpdateMode: boolean = false;
+  selectedWeaponId: any;
   constructor(private weaponService: WeaponService, private router: Router, private photoService: PhotoService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.weaponService.getWeapons().subscribe((data: any) => {
+      this.weapons = data;
+    });
+  }
+
+  deleteWeapon(id: any) {
+    this.weaponService.deleteWeapon(id).subscribe(
+      (response: any) => {
+        // Handle success response, maybe update the weapons list in the frontend.
+        console.log(response.message); // Log the response message
+        // Update the weapons list in the frontend
+        this.weapons = this.weapons.filter((weapon) => weapon.id !== id);
+      },
+      (error: any) => {
+        // Handle error response
+        console.error(error); // Log the error message
+      }
+    );
+  }
+
+  updateWeapon(id: any) {
+    this.isUpdateMode = true;
+    this.selectedWeaponId = id;
+  
+    // Assuming you have a method to retrieve the weapon data by id from the service
+    this.weaponService.getWeaponById(id).subscribe((data: any) => {
+      this.formData.type = data.type;
+      this.formData.element = data.element;
+      this.formData.monster = data.monster;
+  
+      // Assuming you have a method to retrieve the photo by id from the service
+      // this.weaponService.getWeaponPhoto(id).subscribe((photoData: any) => {
+      //   this.capturedPhoto = photoData; // Replace 'photoData' with the appropriate field in your data
+      // });
+  
+    });
+  }
+  
+  onUpdate() {
+    this.weaponService.updateWeapon(this.selectedWeaponId, this.formData, this.capturedPhoto).subscribe(
+      (response: any) => {
+        // Handle success response, maybe update the weapons list in the frontend.
+        console.log(response.message); // Log the response message
+  
+        // Update the weapons list in the frontend
+        // Call a method to refresh the list of weapons or update the specific entry in the list.
+  
+        this.isUpdateMode = false; // Exit the update mode
+        this.capturedPhoto = ""; // Clear the photo after update
+      },
+      (error: any) => {
+        // Handle error response
+        console.error(error); // Log the error message
+      }
+    );
+  }
+
+
+  
 
   ionViewDidEnter(){
     this.getAllWeapons();
@@ -58,27 +118,44 @@ export class ListWeaponsPage implements OnInit {
    this.router.navigateByUrl("/add-weapon");
   }
   async onSubmit() {
-    if (this.formData.type && this.formData.element && this.formData.monster && this.capturedPhoto) {
-      let blob = null;
-      const response = await fetch(this.capturedPhoto);
-      blob = await response.blob();
+    if (this.isUpdateMode) {
+      if (this.formData.type && this.formData.element && this.formData.monster && this.capturedPhoto) {
+        let blob = null;
+        const response = await fetch(this.capturedPhoto);
+        blob = await response.blob();
   
-      this.weaponService.createWeapon(this.formData, blob).subscribe(
-        (data) => {
-          // Maneja la respuesta si es necesario
-          console.log("Weapon added successfully", data);
-          // Aquí podrías hacer algo como actualizar la lista de armas después de agregar una nueva
-          this.getAllWeapons();
-        },
-        (error) => {
-          // Maneja el error si es necesario
-          console.error("Error adding weapon", error);
-        }
-      );
+        this.weaponService.updateWeapon(this.selectedWeaponId, this.formData, blob).subscribe(
+          (data) => {
+            console.log("Weapon updated successfully", data);
+            this.getAllWeapons();
+            this.isUpdateMode = false;
+            this.capturedPhoto = "";
+          },
+          (error) => {
+            console.error("Error updating weapon", error);
+          }
+        );
+      } else {
+        console.error("Please fill all the required fields and add an image.");
+      }
     } else {
-      console.error("Please fill all the required fields and add an image.");
+      if (this.formData.type && this.formData.element && this.formData.monster && this.capturedPhoto) {
+        let blob = null;
+        const response = await fetch(this.capturedPhoto);
+        blob = await response.blob();
+  
+        this.weaponService.createWeapon(this.formData, blob).subscribe(
+          (data) => {
+            console.log("Weapon added successfully", data);
+            this.getAllWeapons();
+          },
+          (error) => {
+            console.error("Error adding weapon", error);
+          }
+        );
+      } else {
+        console.error("Please fill all the required fields and add an image.");
+      }
     }
   }
-  
-  
 }
