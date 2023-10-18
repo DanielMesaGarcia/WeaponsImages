@@ -17,4 +17,48 @@
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <form (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="stacked">Type</ion-label>
+      <ion-input type="text" name="type" [(ngModel)]="formData.type"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="stacked">Element</ion-label>
+      <ion-input type="text" name="element" [(ngModel)]="formData.element"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="stacked">Monster</ion-label>
+      <ion-input type="text" name="monster" [(ngModel)]="formData.monster"></ion-input>
+    </ion-item>
+  
+    <ion-button expand="full" type="submit">Submit</ion-button>
+  </form>
+
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="6">
+        <ion-img class="photo-frame" *ngIf="capturedPhoto" [src]="capturedPhoto" (click)="takePhoto()"></ion-img>
+        <ion-img class="photo-frame" *ngIf="!capturedPhoto" src="../../assets/No-Image-Placeholder.svg"
+          (click)="takePhoto()"></ion-img>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button color="primary" fill="outline" (click)="takePhoto()">
+          <ion-icon slot="start" name="camera-outline"></ion-icon>
+          Take a photo
+        </ion-button>
+        <ion-button color="primary" fill="outline" (click)="pickImage()">
+          <ion-icon slot="start" name="image-outline"></ion-icon>
+          Pick an image
+        </ion-button>
+        <ion-button color="danger" fill="outline" (click)="discardImage()">
+          <ion-icon slot="start" name="aperture"></ion-icon>
+          Discard image
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

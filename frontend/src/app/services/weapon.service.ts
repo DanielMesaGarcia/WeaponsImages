@@ -15,13 +15,14 @@ export class WeaponService {
   }
 
   // DECOMMENT:
-  createWeapon(weapon, blob){
+  createWeapon(weapon, blob) {
     let formData = new FormData();
-    formData.append("type", weapon.brand);
-    formData.append("element", weapon.model);
-    formData.append("monster", weapon.model);
+    formData.append("type", weapon.type); // Debe ser weapon.type en lugar de weapon.brand
+    formData.append("element", weapon.element); // Debe ser weapon.element en lugar de weapon.model
+    formData.append("monster", weapon.monster); // Debe ser weapon.monster en lugar de weapon.model
     formData.append("file", blob);
-
+  
     return this.httpClient.post(this.endPoint, formData);
   }
+  
 }
