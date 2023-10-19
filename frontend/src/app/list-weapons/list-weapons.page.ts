@@ -41,17 +41,10 @@ export class ListWeaponsPage implements OnInit {
     this.isUpdateMode = true;
     this.selectedWeaponId = id;
   
-    // Assuming you have a method to retrieve the weapon data by id from the service
     this.weaponService.getWeaponById(id).subscribe((data: any) => {
       this.formData.type = data.type;
       this.formData.element = data.element;
       this.formData.monster = data.monster;
-  
-      // Assuming you have a method to retrieve the photo by id from the service
-      // this.weaponService.getWeaponPhoto(id).subscribe((photoData: any) => {
-      //   this.capturedPhoto = photoData; // Replace 'photoData' with the appropriate field in your data
-      // });
-  
     });
   }
   
