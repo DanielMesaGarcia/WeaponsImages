@@ -56,22 +56,26 @@ export class ListWeaponsPage implements OnInit {
   }
   
   onUpdate() {
-    this.weaponService.updateWeapon(this.selectedWeaponId, this.formData, this.capturedPhoto).subscribe(
-      (response: any) => {
-        // Handle success response, maybe update the weapons list in the frontend.
-        console.log(response.message); // Log the response message
+    if (this.selectedWeaponId && this.formData.type && this.formData.element && this.formData.monster && this.capturedPhoto) {
+      this.weaponService.updateWeapon(this.selectedWeaponId, this.formData, this.capturedPhoto).subscribe(
+        (response: any) => {
+          // Handle success response, maybe update the weapons list in the frontend.
+          console.log(response.message); // Log the response message
   
-        // Update the weapons list in the frontend
-        // Call a method to refresh the list of weapons or update the specific entry in the list.
+          // Update the weapons list in the frontend
+          // Call a method to refresh the list of weapons or update the specific entry in the list.
   
-        this.isUpdateMode = false; // Exit the update mode
-        this.capturedPhoto = ""; // Clear the photo after update
-      },
-      (error: any) => {
-        // Handle error response
-        console.error(error); // Log the error message
-      }
-    );
+          this.isUpdateMode = false; // Exit the update mode
+          this.capturedPhoto = ""; // Clear the photo after update
+        },
+        (error: any) => {
+          // Handle error response
+          console.error(error); // Log the error message
+        }
+      );
+    } else {
+      console.error("Please fill all the required fields and add an image.");
+    }
   }
 
 

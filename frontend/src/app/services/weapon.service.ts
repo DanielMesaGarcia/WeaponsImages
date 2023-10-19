@@ -38,6 +38,7 @@ export class WeaponService {
   }
 
   updateWeapon(id: any, weapon: any, blob: any) {
+    console.log(weapon);
     let formData = new FormData();
     formData.append("type", weapon.type);
     formData.append("element", weapon.element);
