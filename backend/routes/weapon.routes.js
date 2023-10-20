@@ -15,7 +15,7 @@ module.exports = app => {
   router.get("/:id", weapons.findOne);
 
   // Update a Weapon with id
-  router.put("/:id", weapons.update);
+  router.put("/:id", upload.single('file'), weapons.update);
 
   // Delete a Weapon with id
   router.delete("/:id", weapons.delete);
