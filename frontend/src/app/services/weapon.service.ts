@@ -40,12 +40,11 @@ export class WeaponService {
   updateWeapon(id: any, weapon: any, blob: any) {
     let formData = new FormData();
 
-    // formData.append("type", weapon.type);
-    // formData.append("element", weapon.element);
-    // formData.append("monster", weapon.monster);
-    // formData.append("file", blob);
-    // console.log(formData);
-    //CON WEAPON SI VA, CON FORMDATA NO
-    return this.httpClient.put(`${this.endPoint}/${id}`, weapon);
+    formData.append("type", weapon.type);
+    formData.append("element", weapon.element);
+    formData.append("monster", weapon.monster);
+    formData.append("file", blob);
+    console.log(formData);
+    return this.httpClient.put(`${this.endPoint}/${id}`, formData);
   }
 }

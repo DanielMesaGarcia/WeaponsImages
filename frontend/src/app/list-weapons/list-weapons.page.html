@@ -25,8 +25,8 @@
       <ion-row class="ion-align-items-center">
         <ion-col class="foto" size="6">
           <ion-img class="photo-frame" *ngIf="capturedPhoto" [src]="capturedPhoto" (click)="takePhoto()"></ion-img>
-          <ion-img class="photo-frame" *ngIf="!capturedPhoto" src="../../assets/No-Image-Placeholder.svg"
-            (click)="takePhoto()"></ion-img>
+<ion-img class="photo-frame" *ngIf="!capturedPhoto" src="../../assets/No-Image-Placeholder.svg" (click)="takePhoto()"></ion-img>
+
         </ion-col>
         <ion-col class="columna" size="6">
           <ion-button color="primary" fill="outline" (click)="takePhoto()">

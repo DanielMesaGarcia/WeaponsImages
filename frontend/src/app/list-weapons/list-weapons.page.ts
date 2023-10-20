@@ -40,16 +40,15 @@ export class ListWeaponsPage implements OnInit {
   updateWeapon(id: any) {
     this.isUpdateMode = true;
     this.selectedWeaponId = id;
-
     this.weaponService.getWeaponById(id).subscribe((data: any) => {
       this.formData.type = data.type;
       this.formData.element = data.element;
       this.formData.monster = data.monster;
-      this.formData.filename = data.filename;
-      this.capturedPhoto=data.filename;
-      console.log(this.formData)
+      this.capturedPhoto = 'http://localhost:8080/images/' + data.filename; // Asegúrate de que "image" sea la propiedad correcta que contiene el nombre de la imagen
+      console.log(this.formData);
     });
   }
+  
 
   ionViewDidEnter() {
     this.getAllWeapons();
@@ -92,6 +91,7 @@ export class ListWeaponsPage implements OnInit {
     this.router.navigateByUrl("/add-weapon");
   }
   async onSubmit() {
+    //update
     if (this.isUpdateMode) {
       let blob = null;
       const response = await fetch(this.capturedPhoto);
@@ -109,6 +109,7 @@ export class ListWeaponsPage implements OnInit {
         }
       );
     } else {
+      //post
       if (this.formData.type && this.formData.element && this.formData.monster && this.capturedPhoto) {
         let blob = null;
         const response = await fetch(this.capturedPhoto);

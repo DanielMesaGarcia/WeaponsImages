@@ -56,6 +56,9 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Weapon by the id in the request
+const multer  = require('multer');
+const upload = multer().any(); // Middleware para manejar form-data y archivos adjuntos
+
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -63,21 +66,28 @@ exports.update = (req, res) => {
     .then(weapon => {
       if (weapon) {
         const oldData = { ...weapon.dataValues }; // Copia de los datos antiguos
-        console.log('req.body:', req.body);
-        weapon.update(req.body)
-          .then(() => {
-            const newData = { ...weapon.dataValues }; // Copia de los nuevos datos actualizados
-            console.log('Datos antiguos del arma:', oldData);
-            console.log('Datos actualizados del arma:', newData);
-            res.send({
-              message: "Weapon was updated successfully."
+        upload(req, res, function (err) {
+          if (err) {
+            return res.status(500).send({
+              message: "Error uploading file."
             });
-          })
-          .catch(err => {
-            res.status(500).send({
-              message: `Error updating Weapon with id=${id}`
+          }
+          console.log('req.body:', req.body);
+          weapon.update(req.body)
+            .then(() => {
+              const newData = { ...weapon.dataValues }; // Copia de los nuevos datos actualizados
+              console.log('Datos antiguos del arma:', oldData);
+              console.log('Datos actualizados del arma:', newData);
+              res.send({
+                message: "Weapon was updated successfully."
+              });
+            })
+            .catch(err => {
+              res.status(500).send({
+                message: `Error updating Weapon with id=${id}`
+              });
             });
-          });
+        });
       } else {
         res.send({
           message: `Cannot update Weapon with id=${id}. Maybe Weapon was not found or req.body is empty!`
@@ -90,6 +100,8 @@ exports.update = (req, res) => {
       });
     });
 };
+
+
 
 
 const fs = require('fs');
