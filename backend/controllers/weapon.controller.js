@@ -5,12 +5,12 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Weapon
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.type || !req.body.element || !req.body.monster){
+  if (!req.body.type || !req.body.element || !req.body.monster) {
     res.status(400).send({
       message: "Content cannot be empty!"
     });
   }
-  
+
   // Create a Weapon
   const weapon = {
     type: req.body.type,
@@ -92,28 +92,54 @@ exports.update = (req, res) => {
 };
 
 
+const fs = require('fs');
+const path = require('path');
 
 // Delete a Weapon with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Weapon.destroy({
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Weapon was deleted successfully!"
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Weapon with id=${id}. Maybe Weapon was not found!`
+  Weapon.findByPk(id)
+    .then(weapon => {
+      if (!weapon) {
+        return res.status(404).send({
+          message: `Weapon not found with id ${id}.`
         });
       }
+
+      const filename = weapon.filename;
+
+      // Elimina el registro del arma
+      return Weapon.destroy({
+        where: { id: id }
+      }).then(num => {
+        if (num === 1) {
+          // Si se elimina correctamente, también elimina el archivo
+          if (filename) {
+            const filePath = path.join(__dirname, '../public/images', filename);
+            fs.unlink(filePath, err => {
+              if (err) {
+                console.error('Error deleting file', err);
+              } else {
+                console.log('File deleted successfully');
+              }
+            });
+          }
+
+          res.send({
+            message: 'Weapon and corresponding image were deleted successfully!'
+          });
+        } else {
+          res.send({
+            message: `Cannot delete Weapon with id=${id}. Maybe Weapon was not found!`
+          });
+        }
+      });
     })
     .catch(err => {
       res.status(500).send({
-        message: `Could not delete Weapon with id=${id}`
+        message: err.message || `Error retrieving Weapon with id=${id}`
       });
     });
 };
+
