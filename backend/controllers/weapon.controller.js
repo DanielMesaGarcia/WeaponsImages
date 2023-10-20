@@ -59,14 +59,25 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Weapon.update(req.body, {
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Weapon was updated successfully."
-        });
+  Weapon.findByPk(id)
+    .then(weapon => {
+      if (weapon) {
+        const oldData = { ...weapon.dataValues }; // Copia de los datos antiguos
+        console.log('req.body:', req.body);
+        weapon.update(req.body)
+          .then(() => {
+            const newData = { ...weapon.dataValues }; // Copia de los nuevos datos actualizados
+            console.log('Datos antiguos del arma:', oldData);
+            console.log('Datos actualizados del arma:', newData);
+            res.send({
+              message: "Weapon was updated successfully."
+            });
+          })
+          .catch(err => {
+            res.status(500).send({
+              message: `Error updating Weapon with id=${id}`
+            });
+          });
       } else {
         res.send({
           message: `Cannot update Weapon with id=${id}. Maybe Weapon was not found or req.body is empty!`
@@ -75,10 +86,12 @@ exports.update = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: `Error updating Weapon with id=${id}`
+        message: `Error retrieving Weapon with id=${id}`
       });
     });
 };
+
+
 
 // Delete a Weapon with the specified id in the request
 exports.delete = (req, res) => {
