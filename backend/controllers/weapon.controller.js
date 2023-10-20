@@ -32,32 +32,60 @@ exports.create = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  const weapon = {
-    id: req.body.id,
-    type: req.body.type,
-    element: req.body.element,
-    monster: req.body.monster,
-    filename: req.file ? req.file.filename : ""
-  }
-
-  Weapon.update(weapon, {
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send(num);
-      } else {
-        res.status(404).send({
-          message: `Cannot update Weapon with id=${id}. Maybe Weapon was not found.`
+  Weapon.findByPk(id)
+    .then(weapon => {
+      if (!weapon) {
+        return res.status(404).send({
+          message: `Weapon not found with id ${id}.`
         });
       }
+
+      const oldFilename = weapon.filename;
+
+      const updatedWeapon = {
+        id: req.body.id,
+        type: req.body.type,
+        element: req.body.element,
+        monster: req.body.monster,
+        filename: req.file ? req.file.filename : oldFilename
+      };
+
+      Weapon.update(updatedWeapon, {
+        where: { id: id }
+      })
+        .then(num => {
+          if (num == 1) {
+            // Si se actualiza correctamente y la imagen ha cambiado, elimina la imagen anterior
+            if (req.file && oldFilename) {
+              const filePath = path.join(__dirname, '../public/images', oldFilename);
+              fs.unlink(filePath, err => {
+                if (err) {
+                  console.error('Error deleting old file', err);
+                } else {
+                  console.log('Old file deleted successfully');
+                }
+              });
+            }
+            res.send(num);
+          } else {
+            res.status(404).send({
+              message: `Cannot update Weapon with id=${id}. Maybe Weapon was not found.`
+            });
+          }
+        })
+        .catch(err => {
+          res.status(500).send({
+            message: "Could not update Weapon with id=" + id
+          });
+        });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not update Weapon with id=" + id
+        message: err.message || `Error retrieving Weapon with id=${id}`
       });
     });
 };
+
 
 // Retrieve all Weapons from the database.
 exports.findAll = (req, res) => {
