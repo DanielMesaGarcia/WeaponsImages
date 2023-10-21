@@ -22,6 +22,26 @@ export class ListWeaponsPage implements OnInit {
     });
   }
 
+  private validateInputs(): boolean {
+    // Expresiones regulares para validar los campos
+    const typeRegex = /^[a-zA-Z\s]+$/;
+    const elementRegex = /^[a-zA-Z]+$/;
+    const monsterRegex = /^[a-zA-Z\s\-?'']+$/;
+
+    // Verificar si los campos cumplen con las expresiones regulares
+    const isTypeValid = typeRegex.test(this.formData.type);
+    const isElementValid = elementRegex.test(this.formData.element);
+    const isMonsterValid = monsterRegex.test(this.formData.monster);
+    let isPictureValid = false;
+    if (typeof this.capturedPhoto !== 'undefined' && this.capturedPhoto !== null) {
+      isPictureValid = true;
+    }
+
+    // Devolver true si todos los campos son válidos, de lo contrario, false
+    return isTypeValid && isElementValid && isMonsterValid && isPictureValid;
+  }
+
+
   deleteWeapon(id: any) {
     this.weaponService.deleteWeapon(id).subscribe(
       (response: any) => {
@@ -48,7 +68,7 @@ export class ListWeaponsPage implements OnInit {
       console.log(this.formData);
     });
   }
-  
+
 
   ionViewDidEnter() {
     this.getAllWeapons();
@@ -91,42 +111,83 @@ export class ListWeaponsPage implements OnInit {
     this.router.navigateByUrl("/add-weapon");
   }
   async onSubmit() {
-    //update
-    if (this.isUpdateMode) {
-      let blob = null;
-      const response = await fetch(this.capturedPhoto);
-      blob = await response.blob();
-      console.log("formdata", this.formData);
-      this.weaponService.updateWeapon(this.selectedWeaponId, this.formData, blob).subscribe(
-        (data) => {
-          console.log("Weapon updated successfully", data);
-          this.getAllWeapons();
-          this.isUpdateMode = false;
-          this.capturedPhoto = "";
-        },
-        (error) => {
-          console.error("Error updating weapon", error);
-        }
-      );
-    } else {
-      //post
-      if (this.formData.type && this.formData.element && this.formData.monster && this.capturedPhoto) {
+    // JavaScript
+    const typeRegex = /^[a-zA-Z\s]+$/;
+    const elementRegex = /^[a-zA-Z]+$/;
+    const monsterRegex = /^[a-zA-Z\s\-?'']+$/;
+
+    // Verificar si los campos cumplen con las expresiones regulares
+    const isTypeValid = typeRegex.test(this.formData.type);
+    const typeError = document.getElementById('typeError');
+    const isElementValid = elementRegex.test(this.formData.element);
+    const elementError = document.getElementById('elementError');
+    const isMonsterValid = monsterRegex.test(this.formData.monster);
+    const monsterError = document.getElementById('monsterError');
+    const pictureError = document.getElementById('pictureError');
+    monsterError.classList.remove('show');
+    typeError.classList.remove('show');
+    elementError.classList.remove('show');
+    pictureError.classList.remove('show');
+    if (this.validateInputs()) {
+      //update
+      if (this.isUpdateMode) {
         let blob = null;
         const response = await fetch(this.capturedPhoto);
         blob = await response.blob();
-
-        this.weaponService.createWeapon(this.formData, blob).subscribe(
+        console.log("formdata", this.formData);
+        this.weaponService.updateWeapon(this.selectedWeaponId, this.formData, blob).subscribe(
           (data) => {
-            console.log("Weapon added successfully", data);
+            console.log("Weapon updated successfully", data);
             this.getAllWeapons();
+            this.isUpdateMode = false;
+            this.capturedPhoto = "";
           },
           (error) => {
-            console.error("Error adding weapon", error);
+            console.error("Error updating weapon", error);
           }
         );
       } else {
-        console.error("Please fill all the required fields and add an image.");
+        //post
+        if (this.formData.type && this.formData.element && this.formData.monster && this.capturedPhoto) {
+          let blob = null;
+          const response = await fetch(this.capturedPhoto);
+          blob = await response.blob();
+
+          this.weaponService.createWeapon(this.formData, blob).subscribe(
+            (data) => {
+              console.log("Weapon added successfully", data);
+              this.getAllWeapons();
+            },
+            (error) => {
+              console.error("Error adding weapon", error);
+            }
+          );
+        } else {
+          console.error("Please fill all the required fields and add an image.");
+        }
       }
+    } else {
+
+      if (!isTypeValid) {
+        console.log("TEST TEST")
+        typeError.classList.add('show');
+      }
+
+
+      if (!isElementValid) {
+        elementError.classList.add('show');
+      }
+
+
+      if (!isMonsterValid) {
+        monsterError.classList.add('show');
+      }
+
+
+      if (this.capturedPhoto === 'undefined' || this.capturedPhoto === '' || this.capturedPhoto === null) {
+        pictureError.classList.add('show');
+      }
+
     }
   }
 }

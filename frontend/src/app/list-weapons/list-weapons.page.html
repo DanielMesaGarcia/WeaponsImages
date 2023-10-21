@@ -25,7 +25,8 @@
       <ion-row class="ion-align-items-center">
         <ion-col class="foto" size="6">
           <ion-img class="photo-frame" *ngIf="capturedPhoto" [src]="capturedPhoto" (click)="takePhoto()"></ion-img>
-<ion-img class="photo-frame" *ngIf="!capturedPhoto" src="../../assets/No-Image-Placeholder.svg" (click)="takePhoto()"></ion-img>
+          <ion-img class="photo-frame" *ngIf="!capturedPhoto" src="../../assets/No-Image-Placeholder.svg"
+            (click)="takePhoto()"></ion-img>
 
         </ion-col>
         <ion-col class="columna" size="6">
@@ -43,6 +44,14 @@
           </ion-button>
           <ion-button color="success" fill="outline" type="submit"> Submit</ion-button>
           <ion-button color="success" fill="outline" (click)="getAllWeapons()">Read</ion-button>
+          <!-- HTML -->
+          <b id="typeError" class="error">Invalid type input, use only letters or spaces</b>
+          <b id="elementError" class="error">Invalid element input, use only letters</b>
+          <b id="monsterError" class="error">Invalid monster input, use only letters, spaces, ? or '</b>
+          <b id="pictureError" class="error">No picture captured</b>
+
+
+
         </ion-col>
       </ion-row>
     </ion-grid>
