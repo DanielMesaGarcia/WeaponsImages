@@ -45,6 +45,7 @@
           <ion-button color="success" fill="outline" type="submit"> Submit</ion-button>
           <ion-button color="success" fill="outline" (click)="getAllWeapons()">Read</ion-button>
           <!-- HTML -->
+          <b id="upd" class="error" [ngClass]="{'upd': isUpdateMode}">You are now in update mode, submitting now will update the entry you selected. To leave update mode click the READ button</b>
           <b id="typeError" class="error">Invalid type input, use only letters or spaces</b>
           <b id="elementError" class="error">Invalid element input, use only letters</b>
           <b id="monsterError" class="error">Invalid monster input, use only letters, spaces, ? or '</b>

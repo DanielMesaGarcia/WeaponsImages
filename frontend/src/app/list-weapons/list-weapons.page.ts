@@ -67,6 +67,8 @@ export class ListWeaponsPage implements OnInit {
       this.capturedPhoto = 'http://localhost:8080/images/' + data.filename; // Asegúrate de que "image" sea la propiedad correcta que contiene el nombre de la imagen
       console.log(this.formData);
     });
+    const upd = document.getElementById('upd');
+    upd.classList.add('show');
   }
 
 
@@ -105,6 +107,9 @@ export class ListWeaponsPage implements OnInit {
       console.log(weap);
       this.weapons = weap;
     })
+    const upd = document.getElementById('upd');
+    upd.classList.remove('show');
+    this.isUpdateMode=false;
   }
 
   addWeapon() {
@@ -146,6 +151,8 @@ export class ListWeaponsPage implements OnInit {
             console.error("Error updating weapon", error);
           }
         );
+        const upd = document.getElementById('upd');
+    upd.classList.remove('show');
       } else {
         //post
         if (this.formData.type && this.formData.element && this.formData.monster && this.capturedPhoto) {
@@ -166,6 +173,10 @@ export class ListWeaponsPage implements OnInit {
           console.error("Please fill all the required fields and add an image.");
         }
       }
+      this.formData.type = '';
+      this.formData.element = '';
+      this.formData.monster = '';
+      this.capturedPhoto = null;
     } else {
 
       if (!isTypeValid) {
@@ -189,5 +200,6 @@ export class ListWeaponsPage implements OnInit {
       }
 
     }
+    
   }
 }

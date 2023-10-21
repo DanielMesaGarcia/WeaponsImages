@@ -113,64 +113,6 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a Weapon by the id in the request
-// Update a Weapon by the id in the request
-// const multer = require('multer');
-// const upload = multer({ dest: 'uploads/' }).any(); // Middleware para manejar form-data y archivos adjuntos
-// const path = require('path');
-// exports.update = (req, res) => {
-//   const id = req.params.id;
-
-//   Weapon.findByPk(id)
-//     .then(weapon => {
-//       if (weapon) {
-//         const oldData = { ...weapon.dataValues }; // Copia de los datos antiguos
-//         upload(req, res, function (err) {
-//           if (err) {
-//             return res.status(500).send({
-//               message: "Error uploading file."
-//             });
-//           }
-
-//           let updateData = req.body;
-//           if (req.files && req.files.length > 0) {
-//             updateData = {
-//               ...updateData,
-//               filename: req.files[0].originalname
-//             };
-//         }
-
-//           weapon.update(updateData)
-//             .then(() => {
-//               const newData = { ...weapon.dataValues }; // Copia de los nuevos datos actualizados
-//               console.log('Datos antiguos del arma:', oldData);
-//               console.log('Datos actualizados del arma:', newData);
-//               res.send({
-//                 message: "Weapon was updated successfully."
-//               });
-//             })
-//             .catch(err => {
-//               res.status(500).send({
-//                 message: `Error updating Weapon with id=${id}`
-//               });
-//             });
-//         });
-//       } else {
-//         res.send({
-//           message: `Cannot update Weapon with id=${id}. Maybe Weapon was not found or req.body is empty!`
-//         });
-//       }
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message: `Error retrieving Weapon with id=${id}`
-//       });
-//     });
-// };
-
-
-
-
 
 const fs = require('fs');
 const path = require('path');
