@@ -10,6 +10,8 @@ import { PhotoService } from '../services/photo.service';
   styleUrls: ['./list-weapons.page.scss'],
 })
 export class ListWeaponsPage implements OnInit {
+  blobsub: any;
+  photoChanged: boolean=false;
   capturedPhoto: string = "";
   weapons: any = [];
   isUpdateMode: boolean = false;
@@ -80,12 +82,14 @@ export class ListWeaponsPage implements OnInit {
     this.photoService.takePhoto().then(data => {
       this.capturedPhoto = data.webPath;
     });
+    this.photoChanged=true;
   }
 
   pickImage() {
     this.photoService.pickImage().then(data => {
       this.capturedPhoto = data.webPath;
     });
+    this.photoChanged=true;
   }
 
   discardImage() {
@@ -110,6 +114,10 @@ export class ListWeaponsPage implements OnInit {
     const upd = document.getElementById('upd');
     upd.classList.remove('show');
     this.isUpdateMode=false;
+    this.formData.type = '';
+      this.formData.element = '';
+      this.formData.monster = '';
+      this.capturedPhoto = null;
   }
 
   addWeapon() {
@@ -136,9 +144,15 @@ export class ListWeaponsPage implements OnInit {
     if (this.validateInputs()) {
       //update
       if (this.isUpdateMode) {
-        let blob = null;
+        let blob:any;
+        if(this.photoChanged){
+         blob = null;
         const response = await fetch(this.capturedPhoto);
         blob = await response.blob();
+        this.blobsub=blob;
+        }else{
+           blob = this.blobsub;
+        }
         console.log("formdata", this.formData);
         this.weaponService.updateWeapon(this.selectedWeaponId, this.formData, blob).subscribe(
           (data) => {
@@ -146,6 +160,7 @@ export class ListWeaponsPage implements OnInit {
             this.getAllWeapons();
             this.isUpdateMode = false;
             this.capturedPhoto = "";
+            this.photoChanged=false;
           },
           (error) => {
             console.error("Error updating weapon", error);
