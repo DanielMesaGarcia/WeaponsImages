@@ -1,24 +1,26 @@
+const weapons = require("../controllers/weapon.controller");
+const upgrades = require("../controllers/upgrades.controller");
+const upload = require('../multer/upload');
+const express = require("express");
+
+const weaponRouter = express.Router();
+const upgradesRouter = express.Router();
+
+// Weapons routes
+weaponRouter.post("/", upload.single('file'), weapons.create);
+weaponRouter.get("/", weapons.findAll);
+weaponRouter.get("/:id", weapons.findOne);
+weaponRouter.put("/:id", upload.single('file'), weapons.update);
+weaponRouter.delete("/:id", weapons.delete);
+
+// Upgrades routes
+upgradesRouter.post("/", upgrades.createUpgrades);
+upgradesRouter.get("/", upgrades.getAllUpgrades);
+upgradesRouter.get("/:id", upgrades.getUpgradesById);
+upgradesRouter.put("/:id", upgrades.updateUpgrades);
+upgradesRouter.delete("/:id", upgrades.deleteUpgrades);
+
 module.exports = app => {
-  const weapons = require("../controllers/weapon.controller");
-  var upload = require('../multer/upload');
-
-  var router = require("express").Router();
-
-  // Create a new Weapon
-  router.post("/", upload.single('file'), weapons.create);
-  router.post("/", weapons.create);
-
-  // Retrieve all Weapons
-  router.get("/", weapons.findAll);
-
-  // Retrieve a single Weapon with id
-  router.get("/:id", weapons.findOne);
-
-  // Update a Weapon with id
-  router.put("/:id", upload.single('file'), weapons.update);
-
-  // Delete a Weapon with id
-  router.delete("/:id", weapons.delete);
-
-  app.use("/api/weapons", router);
-}
+  app.use("/api/weapons", weaponRouter);
+  app.use("/api/upgrades", upgradesRouter);
+};
