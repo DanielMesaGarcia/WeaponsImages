@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,8 +28,9 @@ export class UpdatesService {
     return this.httpClient.get(`${this.endPoint}/${id}`);
   }
 
-  deleteUpgrades(id: any) {
-    return this.httpClient.delete(`${this.endPoint}/${id}`);
+  deleteUpgrades(upgradeId: any): Observable<any> {
+    const url = `${this.endPoint}/${upgradeId}`;
+    return this.httpClient.delete(url);
   }
 
   updateUpgrades(id: any, upgrades: any) {

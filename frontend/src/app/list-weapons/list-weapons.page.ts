@@ -230,4 +230,19 @@ export class ListWeaponsPage implements OnInit {
       console.log(data);
     });
   }
+  eliminarUpgrade(upgrade: any) {
+    this.updateService.deleteUpgrades(upgrade.id).subscribe(
+      (response: any) => {
+        // Aquí puedes manejar la respuesta después de eliminar el upgrade
+        console.log(response);
+        // Eliminar el upgrade de la lista
+        this.upgradesList = this.upgradesList.filter((item) => item.id !== upgrade.id);
+      },
+      (error: any) => {
+      }
+    );
+    this.loadUpgrades(upgrade);
+  }
+  
 }
+  

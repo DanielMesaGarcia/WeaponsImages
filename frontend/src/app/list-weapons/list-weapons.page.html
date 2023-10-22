@@ -81,9 +81,11 @@
                 <h2>Tier: {{ upgrade.tier }}</h2>
                 <h3>Jewels: {{ upgrade.jewels }}</h3>
               </ion-label>
+              <ion-button color="danger" fill="clear" (click)="eliminarUpgrade(upgrade)">X</ion-button>
             </ion-item>
           </ion-card>
         </ion-list>
+        
       </ion-col>
       
 
