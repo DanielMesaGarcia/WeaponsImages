@@ -244,5 +244,29 @@ export class ListWeaponsPage implements OnInit {
     this.loadUpgrades(upgrade);
   }
   
+  // Asegúrate de inicializar newUpgrade en tu componente
+newUpgrade: any = {};
+
+// ...
+
+agregarUpgrades() {
+  const weaponId = this.weaponClicked;
+  this.updateService.createUpgrades({...this.newUpgrade, weaponId}).subscribe(
+    (response: any) => {
+      // Aquí puedes manejar la respuesta después de crear el upgrade
+      console.log(response);
+      // Agregar el nuevo upgrade a la lista
+      this.upgradesList.push(response);
+      // Limpiar los campos del formulario después de agregar
+      this.newUpgrade = {};
+    },
+    (error: any) => {
+      // Aquí puedes manejar los errores de la creación del upgrade
+      console.error(error);
+    }
+  );
+}
+
+
 }
   

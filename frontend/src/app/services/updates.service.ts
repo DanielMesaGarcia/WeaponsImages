@@ -15,31 +15,20 @@ export class UpdatesService {
     return this.httpClient.get(`${this.endPoint}?weaponId=${weaponId}`);
   }
 
-  createUpgrades(upgrades: any) {
-    let formData = new FormData();
-    formData.append("tier", upgrades.tier);
-    formData.append("jewels", upgrades.jewels);
-    formData.append("weaponId", upgrades.weaponId);
-
-    return this.httpClient.post(this.endPoint, formData);
+  createUpgrades(upgrade: any): Observable<any> {
+    return this.httpClient.post(this.endPoint, upgrade);
   }
+  
 
-  getUpgradesById(id: any) {
-    return this.httpClient.get(`${this.endPoint}/${id}`);
+  updateUpgrades(upgrade: any): Observable<any> {
+    const url = `${this.endPoint}/${upgrade.id}`;
+    return this.httpClient.put(url, upgrade);
   }
+  
 
   deleteUpgrades(upgradeId: any): Observable<any> {
     const url = `${this.endPoint}/${upgradeId}`;
     return this.httpClient.delete(url);
   }
 
-  updateUpgrades(id: any, upgrades: any) {
-    let formData = new FormData();
-
-    formData.append("tier", upgrades.tier);
-    formData.append("jewels", upgrades.jewels);
-    formData.append("weaponId", upgrades.weaponId);
-    
-    return this.httpClient.put(`${this.endPoint}/${id}`, formData);
-  }
 }

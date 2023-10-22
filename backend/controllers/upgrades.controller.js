@@ -33,27 +33,46 @@ const getUpgradesById = async (req, res) => {
 const createUpgrades = async (req, res) => {
   const { tier, jewels, weaponId } = req.body;
   try {
-    await Upgrades.create({ tier, jewels, weaponId });
-    res.status(201).send("Upgrades created successfully");
+    const newUpgrade = await Upgrades.create({
+      tier: tier,
+      jewels: jewels,
+      weaponId: weaponId
+    });
+    res.json(newUpgrade);
   } catch (err) {
     res.status(500).send({
-      message: err.message || "Some error occurred while creating the Upgrades.",
+      message: err.message || "Some error occurred while creating the Upgrade."
     });
   }
 };
 
+
 const updateUpgrades = async (req, res) => {
   const id = req.params.id;
-  const { tier, jewels, weaponId } = req.body;
   try {
-    await Upgrades.update({ tier, jewels, weaponId }, { where: { id: id } });
-    res.send("Upgrades was updated successfully.");
+    const [numUpdatedRows, updatedRows] = await Upgrades.update(
+      {
+        tier: req.body.tier,
+        jewels: req.body.jewels
+      },
+      {
+        where: { id: id }
+      }
+    );
+    if (numUpdatedRows === 1) {
+      res.send(updatedRows[0]);
+    } else {
+      res.send({
+        message: `Cannot update Upgrade with id=${id}. Maybe Upgrade was not found or req.body is empty!`
+      });
+    }
   } catch (err) {
     res.status(500).send({
-      message: err.message || `Error updating Upgrades with id=${id}`,
+      message: `Error updating Upgrade with id=${id}`
     });
   }
 };
+
 
 const deleteUpgrades = async (req, res) => {
   const id = req.params.id;

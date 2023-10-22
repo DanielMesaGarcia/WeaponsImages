@@ -25,6 +25,7 @@ db.upgrades = require("./upgrades.model.js")(sequelize, Sequelize);
 db.upgrades.belongsTo(db.weapons, {
   foreignKey: "weaponId",
   as: "weapon",
+  onDelete: 'CASCADE',
 });
 
 module.exports = db;
