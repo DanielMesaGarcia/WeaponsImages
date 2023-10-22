@@ -2,15 +2,21 @@ const db = require("../models");
 const Upgrades = db.upgrades; 
 
 const getAllUpgrades = async (req, res) => {
+  const weaponId = req.query.weaponId;
   try {
-    const upgrades = await Upgrades.findAll();
+    const upgrades = await Upgrades.findAll({
+      where: { weaponId: weaponId },
+    });
     res.json(upgrades);
   } catch (err) {
     res.status(500).send({
-      message: err.message || "Some error occurred while retrieving upgrades.",
+      message: err.message || `Some error occurred while retrieving upgrades for weaponId=${weaponId}.`,
     });
   }
 };
+
+
+
 
 const getUpgradesById = async (req, res) => {
   const id = req.params.id;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WeaponService } from '../services/weapon.service';
 import { PhotoService } from '../services/photo.service';
+import { UpdatesService } from '../services/updates.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class ListWeaponsPage implements OnInit {
   weapons: any = [];
   isUpdateMode: boolean = false;
   selectedWeaponId: any;
-  constructor(private weaponService: WeaponService, private router: Router, private photoService: PhotoService) { }
+  constructor(private weaponService: WeaponService, private router: Router, private photoService: PhotoService, private updateService: UpdatesService) { }
 
   ngOnInit() {
     this.weaponService.getWeapons().subscribe((data: any) => {
@@ -216,5 +217,17 @@ export class ListWeaponsPage implements OnInit {
 
     }
     
+  }
+
+  weaponClicked: any;
+  upgradesList: any[] = [];
+
+
+  loadUpgrades(weaponId: any) {
+    this.weaponClicked = weaponId;
+    this.updateService.getUpgrades(this.weaponClicked).subscribe((data: any) => {
+      this.upgradesList = data; // Asegúrate de que el servicio devuelva los datos esperados
+      console.log(data);
+    });
   }
 }

@@ -45,7 +45,8 @@
           <ion-button color="success" fill="outline" type="submit"> Submit</ion-button>
           <ion-button color="success" fill="outline" (click)="getAllWeapons()">Read</ion-button>
           <!-- HTML -->
-          <b id="upd" class="error" [ngClass]="{'upd': isUpdateMode}">You are now in update mode, submitting now will update the entry you selected. To leave update mode click the READ button</b>
+          <b id="upd" class="error" [ngClass]="{'upd': isUpdateMode}">You are now in update mode, submitting now will
+            update the entry you selected. To leave update mode click the READ button</b>
           <b id="typeError" class="error">Invalid type input, use only letters or spaces</b>
           <b id="elementError" class="error">Invalid element input, use only letters</b>
           <b id="monsterError" class="error">Invalid monster input, use only letters, spaces, ? or '</b>
@@ -71,11 +72,22 @@
       </ion-label>
       <ion-button color="danger" fill="outline" (click)="deleteWeapon(b.id)">Delete</ion-button>
       <ion-button color="primary" fill="outline" (click)="updateWeapon(b.id)">Update</ion-button>
+      <ion-button color="success" fill="outline" (click)="loadUpgrades(b.id)">Show Upgrades</ion-button>
+      <ion-col>
+        <ion-list *ngIf="weaponClicked === b.id">
+          <ion-card *ngFor="let upgrade of upgradesList">
+            <ion-item>
+              <ion-label>
+                <h2>Tier: {{ upgrade.tier }}</h2>
+                <h3>Jewels: {{ upgrade.jewels }}</h3>
+              </ion-label>
+            </ion-item>
+          </ion-card>
+        </ion-list>
+      </ion-col>
+      
+
     </ion-item>
   </ion-list>
-
-
-
-
 
 </ion-content>
